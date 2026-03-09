@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Sitemap: https://business.tanp.jp/sitemap.xml
+
+# Disallow thank you page
+Disallow: /contact/complete
