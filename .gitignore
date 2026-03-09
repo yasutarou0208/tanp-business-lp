@@ -1,0 +1,4 @@
+scripts/mhtml_cache/
+scripts/screenshots/
+scripts/batch_results.json
+node_modules/
