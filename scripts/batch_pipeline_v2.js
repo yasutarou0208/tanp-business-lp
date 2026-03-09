@@ -224,12 +224,20 @@ function buildHtml(parts) {
   // 6. Remove @font-face (use Google Fonts CDN instead)
   html = html.replace(/@font-face\s*\{[^}]*\}/g, '');
 
-  // 7. Ensure Google Fonts CDN
+  // 7. Ensure Google Fonts CDN + Material Symbols
+  const materialSymbolsLink = '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">';
+  const materialIconsLink = '<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">';
   if (!html.includes('fonts.googleapis.com/css2?family=Noto+Sans+JP')) {
     const fontLinks = '<link rel="preconnect" href="https://fonts.googleapis.com">\n' +
       '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n' +
-      '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700&family=Inter:wght@100..900&family=Noto+Serif:wght@400;700&display=swap">';
+      '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700&family=Inter:wght@100..900&family=Noto+Serif:wght@400;700&display=swap">\n' +
+      materialSymbolsLink + '\n' + materialIconsLink;
     html = html.replace(/<head>/i, '<head>\n' + fontLinks);
+  } else {
+    // Already has Noto Sans, just add Material Symbols if missing
+    if (!html.includes('Material+Symbols+Outlined')) {
+      html = html.replace(/<head>/i, '<head>\n' + materialSymbolsLink + '\n' + materialIconsLink);
+    }
   }
 
   // 8. Remove Nuxt runtime scripts
